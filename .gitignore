@@ -1,0 +1,8 @@
+dist
+.idea
+node_modules
+package-lock.json
+storage
+tmp
+prisma/dev.db
+prisma/migrations

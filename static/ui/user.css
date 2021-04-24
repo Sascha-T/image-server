@@ -1,0 +1,38 @@
+body {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: stretch;
+}
+.center {
+    text-align: center;
+}
+
+.data {
+    background-color: #d3d3d3;
+    min-width: 25%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.red {
+    color: #aa0000;
+}
+.create {
+    border: 10px solid #ff8888;
+}
+.index {
+    border: 10px solid #ff8888;
+}
+
+th {
+    font-weight: normal;
+}
+
+table, th, td {
+    border: 1px solid black;
+}

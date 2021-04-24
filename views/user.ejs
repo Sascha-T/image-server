@@ -1,0 +1,101 @@
+<%
+ function format_date(time) {
+     var options = { second: 'numeric', minute: 'numeric', hour: 'numeric', year: 'numeric', month: 'numeric', day: 'numeric' };
+     return time.toLocaleDateString("en-gb", options);
+ }
+
+ %>
+
+<html>
+<head>
+    <title>SImg - User Page</title>
+    <link rel="stylesheet" href="user.css">
+    <script src="user.js"></script>
+</head>
+<body>
+<script id="variables">
+    const TOKEN_PATH = "<%- paths.TOKEN %>";
+    const FILE_PATH = "<%- paths.FILE %>"
+</script>
+<div class="center">
+    <h1>SImg - The worst image host on earth!</h1> <a href="<%- paths.LOGOUT %>">Log out...</a>
+</div>
+<div class="data">
+    <b>Id: </b><%- user.id %><br>
+    <b>Username: </b><%- user.name %><br>
+    <b>E-Mail: </b><%- email %>
+    <% if(user.isAdmin) { %>
+        <br><b class="red">Is Administrator.</b>
+    <% } %>
+</div>
+<div class="data">
+    <b>Tokens:</b><br>
+    <table style="width:100%">
+        <tr class="index">
+            <th><b>ID</b></th>
+            <th><b>Name</b></th>
+            <th><b>Token</b></th>
+            <th><b>Date of creation</b></th>
+            <th><b>Action</b></th>
+        </tr>
+        <% for(var token of user.tokens) { %>
+            <tr>
+                <th><%- token.id %></th>
+                <th><%- token.name %></th>
+                <th><%- token.token %></th>
+                <th><%- format_date(token.created) %></th>
+                <th><button onclick="deleteToken(<%- token.id %>);">Delete token.</button></th>
+            </tr>
+        <% } %>
+        <tr class="create">
+            <th>
+                <b>NEW</b>
+            </th>
+            <th>
+                <input type="text" id="token_name" name="name">
+            </th>
+            <th>
+                [WILL BE GENERATED]
+            </th>
+            <th>
+                [WILL BE GENERATED]
+            </th>
+            <th>
+                <button onclick="createToken()">Create.</button>
+            </th>
+        </tr>
+    </table>
+</div>
+<div class="data">
+    <b>Files:</b><br>
+
+    <table style="width:100%">
+        <tr class="index">
+            <th><b>ID</b></th>
+            <th><b>Code</b></th>
+            <th><b>Original Name</b></th>
+            <th><b>MIME-Type</b></th>
+            <th><b>Compressed Size</b></th>
+            <th><b>Original Size</b></th>
+            <th><b>Uploader ID</b></th>
+            <th><b>Uploaded</b></th>
+            <th><b>Action</b></th>
+        </tr>
+        <% for(var file of user.files) { %>
+            <tr>
+                <th><%- file.id %></th>
+                <th><%- file.code %></th>
+                <th><%- file.filename %></th>
+                <th><%- file.mimeType %></th>
+                <th><%- file.compressedSize %></th>
+                <th><%- file.originalSize %></th>
+                <th><%- file.uploaderIdentity %></th>
+                <th><%- format_date(file.uploaded) %></th>
+                <th><button onclick="deleteFile(<%- file.id %>);">Delete file.</button></th>
+            </tr>
+        <% } %>
+    </table>
+</div>
+
+</body>
+</html>

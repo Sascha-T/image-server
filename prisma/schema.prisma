@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+//model Picture {
+//    id       Int @id @default(autoincrement())
+//    code     String @unique // Identifier code
+//    uploaded DateTime @default(now()) // Date uploaded
+//    name     String // Original Name
+//
+//    uploaderId Int
+//    uploader   User @relation(fields: [uploaderId], references: [id])
+//}
+
+//model User {
+//    id       Int @id @default(autoincrement())
+//    name     String @unique // Username
+//
+//    key      String @unique // SHA512 of access code (for uploading images).
+//    created  DateTime @default(now()) // Date uploaded
+//
+//    pictures Picture[]
+//}
+
+model User {
+    id Int @unique @id @default(autoincrement())
+
+    name String @unique
+    email String @unique
+    password String // ARGON2
+
+    created DateTime @default(now())
+    uploadLimit Int @default(10485760) // 10 Megabytes
+
+    isAdmin Boolean @default(false)
+
+    files File[]
+    tokens Token[]
+}
+
+model Token {
+    id Int @unique @id @default(autoincrement())
+
+    token String @unique
+    name String
+    created DateTime @default(now())
+
+
+    userId Int
+    user User @relation(fields: [userId], references: [id])
+    files File[]
+
+    optimizeImages Boolean
+    optimizeVideo  Boolean
+}
+
+model File {
+    id Int @unique @id @default(autoincrement())
+    code String @unique
+
+    filename String
+    uploaded DateTime @default(now())
+    mimeType String
+
+    originalSize   Int
+    compressedSize Int
+
+    userId Int
+    user User @relation(fields: [userId], references: [id])
+
+    tokenId Int
+    token Token @relation(fields: [tokenId], references: [id])
+
+    optimized Boolean @default(false)
+
+    uploaderIdentity String
+}
+
+
+
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../storage/dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}

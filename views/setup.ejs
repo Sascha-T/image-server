@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>SImg - Setup Page</title>
+    <link rel="stylesheet" href="setup.css">
+</head>
+<body>
+
+<form id="form" method="POST" action="<%- paths.SETUP %>">
+    <% if(session.setupErrorB) { %>
+        <div id="error">
+            <h1>An error has occcured.</h1>
+            <pre><%- session.setupError %></pre>
+        </div>
+    <% } %>
+    <h1>Creating first admin account...</h1>
+    <div>
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+    </div>
+    <div>
+        <label for="email">E-Mail:</label><br>
+        <input type="text" id="email" name="email">
+    </div>
+    <div>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password">
+    </div>
+    <div>
+        <label for="password_confirm">Confirm Password:</label><br>
+        <input type="password" id="password_confirm" name="password_confirm">
+    </div>
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
